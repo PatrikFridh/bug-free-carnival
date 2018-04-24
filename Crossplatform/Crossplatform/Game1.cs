@@ -17,8 +17,8 @@ namespace Crossplatform
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random random;
-        public int score;
-        
+        float score;
+        float scoreTimer;
 
         Texture2D towerTexture;
         Texture2D heliTexture;
@@ -58,7 +58,7 @@ namespace Crossplatform
             numHeliCopters = 2;
             score = 2;
             heliCopters = new List<HeliCopter>();
-
+            scoreTimer = 0;
             towerStartPosition = new Vector2(Window.ClientBounds.Right, 450);
             heliStartPosition = new Vector2(800, random.Next(0,400));
             fallingStartPosition = new Vector2( random.Next(10, 750), 0); 
@@ -115,9 +115,18 @@ namespace Crossplatform
                 Exit();
             
             // TODO: Add your update logic here
-            float deltatime = (float)gameTime.ElapsedGameTime.Seconds;
+            float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            scoreTimer += deltatime;
+
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
+
+            if (scoreTimer >= 0.5f)
+            {
+                score += 1;
+                scoreTimer = 0f;
+            }
 
             for (int i = 0; i < heliCopters.Count;i++)
             {
@@ -143,10 +152,11 @@ namespace Crossplatform
 
             for (int i = 0; i < heliCopters.Count; i++)
             {
-                heliCopters[i].Draw(spriteBatch);
+                heliCopters[i].Draw(spriteBatch, scoreFont);
             }
             
-            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2(50, 30), Color.Black);
+            spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), new Vector2(50, 30), Color.Red);
+            spriteBatch.DrawString(scoreFont, "Lives: " + heliCopter.Lives.ToString(), new Vector2(600, 30), Color.Blue);
             spriteBatch.End();
             base.Draw(gameTime);
         }
