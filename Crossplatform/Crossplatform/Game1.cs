@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,17 +16,27 @@ namespace Crossplatform
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
-        //Enemy enemy;
-        Texture2D birdTexture;
-        Texture2D bulletTexture;
-        Rectangle birdRectangle;
-        Vector2 moveDirection;
+        Random random;
 
+        Texture2D towerTexture;
+        Texture2D heliTexture;
+        Texture2D fallingTexture;
+
+        Vector2 towerStartPosition;
+        Vector2 heliStartPosition;
+        Vector2 fallingStartPosition;
+
+        Tower tower;
+        HeliCopter heliCopter;
+
+        int numHeliCopters;
+        List<HeliCopter> heliCopters;
+     
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
         }
 
         /// <summary>
@@ -33,11 +48,27 @@ namespace Crossplatform
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            base.Initialize();
-            player = new Player(birdTexture, new Vector2(100, 50), 300, new Vector2(1, 1), 0, Color.White);
+            random = new Random();
+            numHeliCopters = 2;
 
-            IsMouseVisible = true;
-            birdRectangle = birdTexture.Bounds;
+            heliCopters = new List<HeliCopter>();
+
+            towerStartPosition = new Vector2(Window.ClientBounds.Right, 450);
+            heliStartPosition = new Vector2(800, random.Next(0,400));
+            fallingStartPosition = new Vector2( random.Next(10, 750), 0); 
+            
+            base.Initialize();
+            
+            tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
+            heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10));
+
+            for (int i = 0; i < numHeliCopters; i++)
+            {
+                heliStartPosition = new Vector2(800, random.Next(0, 400));
+                heliCopter.heliRotation = random.Next(-10, 10);
+
+                heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 1, new Vector2(0.5f,0.5f), Color.White, 1));
+            }
         }
 
         /// <summary>
@@ -48,10 +79,12 @@ namespace Crossplatform
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            birdTexture = Content.Load<Texture2D>("ball");
-            bulletTexture = Content.Load<Texture2D>("ball");
 
             // TODO: use this.Content to load your game content here
+            towerTexture = Content.Load<Texture2D>("Tower");
+            heliTexture = Content.Load<Texture2D>("HeliCopter");
+            fallingTexture = Content.Load<Texture2D>("FallingObject");
+            //obsGenerator.createPlane(true, 1, planeStartPosition, towerTexture);
         }
 
         /// <summary>
@@ -72,14 +105,17 @@ namespace Crossplatform
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
             // TODO: Add your update logic here
+            float deltatime = (float)gameTime.ElapsedGameTime.Seconds;
+            tower.Update(gameTime, tower, towerStartPosition);
+            heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
 
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            KeyboardState keyboardState = Keyboard.GetState();
-            moveDirection = new Vector2();
-            player.Update(gameTime, keyboardState);
-            //enemy.Update(gameTime, player);
+            for (int i = 0; i < heliCopters.Count;i++)
+            {
+                heliCopters[i].Update(gameTime, heliCopter, new Vector2(800, random.Next(100,300)));
+            }
+
             base.Update(gameTime);
         }
 
@@ -93,11 +129,23 @@ namespace Crossplatform
 
             // TODO: Add your drawing code here
 
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
-            //spriteBatch.Draw(bulletTexture, Vector2.Zero, Color.Blue);
-            //spriteBatch.Draw(birdTexture, Vector2.Zero, Color.White);
+            tower.Draw(spriteBatch);
+           // heliCopter.Draw(spriteBatch);
+
+            for (int i = 0; i < heliCopters.Count; i++)
+            {
+                heliCopters[i].Draw(spriteBatch);
+            }
             spriteBatch.End();
+            
+
+
+            //spriteBatch.Begin();
+            //spriteBatch.Draw(towerTexture, new Vector2(-5,5), Color.White);
+            //spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
