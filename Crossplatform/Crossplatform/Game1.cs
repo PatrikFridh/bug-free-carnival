@@ -150,10 +150,7 @@ namespace Crossplatform
             spriteBatch.End();
             base.Draw(gameTime);
         }
-        public void Changescore(int changeScore)
-        {
-            changeScore += score;
-        }
+
     }
 
 }

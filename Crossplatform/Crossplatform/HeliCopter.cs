@@ -56,6 +56,7 @@ namespace Crossplatform
             heliPosition -= new Vector2(rnd.Next(5,20), heliRotation);
             heliRectangle.Location = (heliPosition - heliOffSet).ToPoint();
             RotationCheck();
+            
 
             if (heliRectangle.Location.X < -200 || heliRectangle.Location.Y < 0 || heliRectangle.Location.Y > 1200)
             {
