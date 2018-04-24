@@ -8,5 +8,6 @@ namespace Crossplatform
 {
     class Enemy
     {
+
     }
 }
