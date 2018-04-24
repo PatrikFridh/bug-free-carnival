@@ -21,5 +21,12 @@
       <FileName>HeliCopter.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Crossplatform.Bullet" Collapsed="true">
+    <Position X="3.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
