@@ -28,7 +28,7 @@ namespace Crossplatform
         {
             texture = playerTexture;
             position = playerStartPos;
-            speed = playerSpeed;
+            speed = playerSpeed * 400;
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f * scale);
             rectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
@@ -40,7 +40,7 @@ namespace Crossplatform
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
-
+            //position -= new Vector2(1, 0);
             Vector2 moveDir = Vector2.Zero;
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
@@ -61,10 +61,11 @@ namespace Crossplatform
             if (moveDir != Vector2.Zero)
             {
                 moveDir.Normalize();
+                //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
                 position += moveDir * pixelsToMove;
-                rectangle.Location = (position - offset).ToPoint();
+                rectangle.Location += (position - offset).ToPoint();
             }
-
+            
             bullets = new List<Bullet>();
         }
         public void ChangeHealth(float healthModifier)
