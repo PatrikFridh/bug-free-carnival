@@ -11,7 +11,13 @@ namespace Crossplatform
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        Player player;
+        //Enemy enemy;
+        Texture2D birdTexture;
+        Texture2D bulletTexture;
+        Rectangle birdRectangle;
+        Vector2 moveDirection;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,8 +33,11 @@ namespace Crossplatform
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
+            player = new Player(birdTexture, new Vector2(100, 50), 300, new Vector2(1, 1), 0, Color.White);
+
+            IsMouseVisible = true;
+            birdRectangle = birdTexture.Bounds;
         }
 
         /// <summary>
@@ -39,6 +48,8 @@ namespace Crossplatform
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            birdTexture = Content.Load<Texture2D>("ball");
+            bulletTexture = Content.Load<Texture2D>("ball");
 
             // TODO: use this.Content to load your game content here
         }
@@ -64,6 +75,11 @@ namespace Crossplatform
 
             // TODO: Add your update logic here
 
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            KeyboardState keyboardState = Keyboard.GetState();
+            moveDirection = new Vector2();
+            player.Update(gameTime, keyboardState);
+            //enemy.Update(gameTime, player);
             base.Update(gameTime);
         }
 
@@ -76,6 +92,12 @@ namespace Crossplatform
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            player.Draw(spriteBatch);
+            //spriteBatch.Draw(bulletTexture, Vector2.Zero, Color.Blue);
+            //spriteBatch.Draw(birdTexture, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
