@@ -17,6 +17,8 @@ namespace Crossplatform
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random random;
+        public int score;
+        
 
         Texture2D towerTexture;
         Texture2D heliTexture;
@@ -31,6 +33,10 @@ namespace Crossplatform
 
         int numHeliCopters;
         List<HeliCopter> heliCopters;
+
+        SpriteFont scoreFont;
+        
+        
      
         public Game1()
         {
@@ -50,7 +56,7 @@ namespace Crossplatform
             // TODO: Add your initialization logic here
             random = new Random();
             numHeliCopters = 2;
-
+            score = 2;
             heliCopters = new List<HeliCopter>();
 
             towerStartPosition = new Vector2(Window.ClientBounds.Right, 450);
@@ -84,7 +90,9 @@ namespace Crossplatform
             towerTexture = Content.Load<Texture2D>("Tower");
             heliTexture = Content.Load<Texture2D>("HeliCopter");
             fallingTexture = Content.Load<Texture2D>("FallingObject");
+            scoreFont = Content.Load<SpriteFont>("File");
             //obsGenerator.createPlane(true, 1, planeStartPosition, towerTexture);
+
         }
 
         /// <summary>
@@ -132,22 +140,20 @@ namespace Crossplatform
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             tower.Draw(spriteBatch);
-           // heliCopter.Draw(spriteBatch);
 
             for (int i = 0; i < heliCopters.Count; i++)
             {
                 heliCopters[i].Draw(spriteBatch);
             }
-            spriteBatch.End();
             
-
-
-            //spriteBatch.Begin();
-            //spriteBatch.Draw(towerTexture, new Vector2(-5,5), Color.White);
-            //spriteBatch.End();
-
-
+            spriteBatch.DrawString(scoreFont, score.ToString(), new Vector2(50, 30), Color.Black);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+        public void Changescore(int changeScore)
+        {
+            changeScore += score;
+        }
     }
+
 }
