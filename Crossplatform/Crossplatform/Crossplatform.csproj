@@ -45,6 +45,7 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="HeliCopter.cs" />
+    <Compile Include="Players.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tower.cs" />
