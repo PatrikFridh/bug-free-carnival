@@ -55,7 +55,7 @@ namespace Crossplatform
         {
             // TODO: Add your initialization logic here
             random = new Random();
-            numHeliCopters = 2;
+            numHeliCopters = 1;
             score = 2;
             heliCopters = new List<HeliCopter>();
             scoreTimer = 0;
@@ -91,7 +91,7 @@ namespace Crossplatform
             heliTexture = Content.Load<Texture2D>("HeliCopter");
             fallingTexture = Content.Load<Texture2D>("FallingObject");
             scoreFont = Content.Load<SpriteFont>("File");
-            playerTexture = Content.Load<Texture2D>("Tower");
+            playerTexture = Content.Load<Texture2D>("HeliCopter");
             //obsGenerator.createPlane(true, 1, planeStartPosition, towerTexture);
 
         }
@@ -123,7 +123,7 @@ namespace Crossplatform
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
 
-            if (scoreTimer >= 0.5f)
+            if (scoreTimer >= 0.1f)
             {
                 score += 1;
                 scoreTimer = 0f;
