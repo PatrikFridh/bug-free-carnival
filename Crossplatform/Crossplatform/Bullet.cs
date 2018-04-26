@@ -11,7 +11,7 @@ namespace Crossplatform
 {
     class Bullet
     {
-        public enum Owner { Players};
+        public enum Owner { Player};
         Owner owner;
         Texture2D texture;
         Rectangle rectangle;
@@ -30,49 +30,6 @@ namespace Crossplatform
             texture = bulletTexture;
             position = bulletStartPos;
             speed = bulletSpeed;
-            moveDir = bulletDir;
-            moveDir.Normalize();
-            scale = bulletScale;
-            offset = bulletTexture.Bounds.Size.ToVector2() * 0.5f;
-            rectangle = new Rectangle((bulletStartPos - offset * scale).ToPoint(), (bulletTexture.Bounds.Size.ToVector2() * scale).ToPoint());
-            rotation = (float)Math.Atan2(moveDir.Y, moveDir.X);
-            color = bulletColor;
-            alive = true;
-            owner = bulletOwner;
-        }
-
-        public void Update(float deltaTime)
-        {
-            position += moveDir * speed * deltaTime;
-            rectangle.Location = (position - offset * scale).ToPoint();
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, position, null, color, rotation, offset, scale, SpriteEffects.None, 0);
-        }
-
-        public float Damage(Rectangle otherRectangle)
-        {
-            float damageToDeal = 0;
-
-            if(rectangle.Intersects(otherRectangle))
-            {
-                damageToDeal = damage;
-                alive = false;
-            }
-
-            return damageToDeal;
-        }
-
-        public bool GetIsAlive()
-        {
-            return alive;
-        }
-
-        public Owner GetOwner()
-        {
-            return owner;
         }
     }
 }
