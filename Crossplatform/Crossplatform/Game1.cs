@@ -19,11 +19,11 @@ namespace Crossplatform
         Random random;
         float score;
         float scoreTimer;
-        Players player;
+
         Texture2D towerTexture;
         Texture2D heliTexture;
         Texture2D fallingTexture;
-        Texture2D playerTexture;
+
         Vector2 towerStartPosition;
         Vector2 heliStartPosition;
         Vector2 fallingStartPosition;
@@ -67,13 +67,13 @@ namespace Crossplatform
             
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10));
-            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White);
+
             for (int i = 0; i < numHeliCopters; i++)
             {
                 heliStartPosition = new Vector2(800, random.Next(0, 400));
                 heliCopter.heliRotation = random.Next(-10, 10);
 
-                heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 300, new Vector2(0.5f,0.5f), Color.White, 1));
+                heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 1, new Vector2(0.5f,0.5f), Color.White, 1));
             }
         }
 
@@ -91,7 +91,10 @@ namespace Crossplatform
             heliTexture = Content.Load<Texture2D>("HeliCopter");
             fallingTexture = Content.Load<Texture2D>("FallingObject");
             scoreFont = Content.Load<SpriteFont>("File");
+<<<<<<< HEAD
             playerTexture = Content.Load<Texture2D>("HeliCopter");
+=======
+>>>>>>> parent of b6264b5... Merge branch 'master' of https://github.com/PatrikFridh/bug-free-carnival
             //obsGenerator.createPlane(true, 1, planeStartPosition, towerTexture);
 
         }
@@ -114,12 +117,12 @@ namespace Crossplatform
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            KeyboardState keyBoardState = Keyboard.GetState();
+            
             // TODO: Add your update logic here
             float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scoreTimer += deltatime;
-            player.Update(gameTime, keyBoardState);
+
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
 
@@ -150,7 +153,7 @@ namespace Crossplatform
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             tower.Draw(spriteBatch);
-            player.Draw(spriteBatch);
+
             for (int i = 0; i < heliCopters.Count; i++)
             {
                 heliCopters[i].Draw(spriteBatch, scoreFont);
