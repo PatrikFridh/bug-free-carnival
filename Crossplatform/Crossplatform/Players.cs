@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Crossplatform
 {
-    class Player
+    class Players
     {
         Texture2D texture;
         Rectangle rectangle;
@@ -20,11 +20,11 @@ namespace Crossplatform
         float speed;
         float rotation;
         float health;
-        Player player;
+        Players player;
 
-        List<Bullets> bullets;
+        List<Bullet> bullets;
 
-        public Player(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor)
+        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor)
         {
             texture = playerTexture;
             position = playerStartPos;
@@ -65,14 +65,14 @@ namespace Crossplatform
                 rectangle.Location = (position - offset).ToPoint();
             }
 
-            bullets = new List<Bullets>();
+            bullets = new List<Bullet>();
         }
-        public void ChangeHealth (float healthModifier)
+        public void ChangeHealth(float healthModifier)
         {
-            health += healthModifier;       
+            health += healthModifier;
             if (health <= 0)
             {
-               player = null;
+                player = null;
             }
         }
 

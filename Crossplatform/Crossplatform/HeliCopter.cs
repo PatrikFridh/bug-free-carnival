@@ -16,6 +16,7 @@ namespace Crossplatform
         Texture2D heliTexture;
         Rectangle heliRectangle;
         Tower tower;
+        public float Lives;
         Rectangle towerRectangle;
         Game1 game1;
 
@@ -35,7 +36,7 @@ namespace Crossplatform
         public HeliCopter(Texture2D texture, Vector2 startPos, float speed, Vector2 scale, Color color, float rotation)// tar imot och ger ut värden
         {
             heliTexture = texture;
-
+            Lives = 10;
            // towerRectangle = tower.GetRectangle();
             heliPosition = startPos;
             heliMoveDir = new Vector2(1, 0);
@@ -56,6 +57,7 @@ namespace Crossplatform
             heliPosition -= new Vector2(rnd.Next(5,20), heliRotation);
             heliRectangle.Location = (heliPosition - heliOffSet).ToPoint();
             RotationCheck();
+            
 
             if (heliRectangle.Location.X < -200 || heliRectangle.Location.Y < 0 || heliRectangle.Location.Y > 1200)
             {
@@ -66,11 +68,12 @@ namespace Crossplatform
             if (heliRectangle.Intersects(towerRectangle))
             {
                 Console.WriteLine("Hello");
-                
+                Lives--;
             }
         }
-        public void Draw(SpriteBatch spriteBatch) // ritar ut helicoptern
+        public void Draw(SpriteBatch spriteBatch, SpriteFont scoreFent) // ritar ut helicoptern
         {
+
             spriteBatch.Draw(heliTexture, heliPosition, null, heliColor, 0, heliOffSet, heliScale, SpriteEffects.None, 0);
         }
         public Rectangle GetRectangle()
