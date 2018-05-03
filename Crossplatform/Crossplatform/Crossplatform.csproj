@@ -42,15 +42,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
-<<<<<<< HEAD
-    <Compile Include="BulletManagers.cs" />
     <Compile Include="Enemy.cs" />
-=======
->>>>>>> 327aeb3af1fa9b868ca3144df57129c849403c86
     <Compile Include="Game1.cs" />
     <Compile Include="HeliCopter.cs" />
-    <Compile Include="Players.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tower.cs" />

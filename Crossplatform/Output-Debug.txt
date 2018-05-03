@@ -1,7 +1,0 @@
-﻿'Crossplatform.exe' (CLR v4.0.30319: DefaultDomain): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_64\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'Crossplatform.exe' (CLR v4.0.30319: DefaultDomain): Loaded 'C:\Users\patrik.fridh\Documents\Github\bug-free-carnival\Crossplatform\Crossplatform\bin\DesktopGL\AnyCPU\Debug\Crossplatform.exe'. Symbols loaded.
-'Crossplatform.exe' (CLR v4.0.30319: Crossplatform.exe): Loaded 'C:\Users\patrik.fridh\Documents\Github\bug-free-carnival\Crossplatform\Crossplatform\bin\DesktopGL\AnyCPU\Debug\MonoGame.Framework.dll'. Module was built without symbols.
-'Crossplatform.exe' (CLR v4.0.30319: Crossplatform.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-'Crossplatform.exe' (CLR v4.0.30319: Crossplatform.exe): Loaded 'C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
-Hello
-The program '[8352] Crossplatform.exe' has exited with code -1 (0xffffffff).
