@@ -55,7 +55,7 @@ namespace Crossplatform
         {
             // TODO: Add your initialization logic here
             random = new Random();
-            numHeliCopters = 1;
+            numHeliCopters = 2;
             score = 2;
             heliCopters = new List<HeliCopter>();
             scoreTimer = 0;
@@ -95,6 +95,7 @@ namespace Crossplatform
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             playerTexture = Content.Load<Texture2D>("HeliCopter");
 =======
 >>>>>>> parent of b6264b5... Merge branch 'master' of https://github.com/PatrikFridh/bug-free-carnival
@@ -106,6 +107,9 @@ namespace Crossplatform
 =======
             playerTexture = Content.Load<Texture2D>("HeliCopter");
 >>>>>>> parent of d77fe60... Merge branch 'master' of https://github.com/PatrikFridh/bug-free-carnival
+=======
+            playerTexture = Content.Load<Texture2D>("Tower");
+>>>>>>> parent of 01d14e4... testsak
             //obsGenerator.createPlane(true, 1, planeStartPosition, towerTexture);
 
         }
@@ -137,7 +141,7 @@ namespace Crossplatform
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
 
-            if (scoreTimer >= 0.1f)
+            if (scoreTimer >= 0.5f)
             {
                 score += 1;
                 scoreTimer = 0f;
