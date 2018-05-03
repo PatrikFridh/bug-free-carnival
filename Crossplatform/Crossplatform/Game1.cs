@@ -99,6 +99,7 @@ namespace Crossplatform
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             playerTexture = Content.Load<Texture2D>("HeliCopter");
 =======
 >>>>>>> parent of b6264b5... Merge branch 'master' of https://github.com/PatrikFridh/bug-free-carnival
@@ -119,6 +120,9 @@ namespace Crossplatform
 =======
             playerTexture = Content.Load<Texture2D>("HeliCopter");
 >>>>>>> parent of 9c6c62e... Revert "Merge branch 'master' of https://github.com/PatrikFridh/bug-free-carnival"
+=======
+            playerTexture = Content.Load<Texture2D>("Tower");
+>>>>>>> parent of 01d14e4... testsak
 =======
             playerTexture = Content.Load<Texture2D>("Tower");
 >>>>>>> parent of 01d14e4... testsak
