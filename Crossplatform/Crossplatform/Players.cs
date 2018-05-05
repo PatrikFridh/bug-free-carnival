@@ -20,11 +20,14 @@ namespace Crossplatform
         float speed;
         float rotation;
         float health;
+        bool alive = true;
+        float attackSpeed;
+        float attackTimer;
         Players player;
 
         List<Bullet> bullets;
 
-        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor)
+        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
         {
             texture = playerTexture;
             position = playerStartPos;
@@ -34,37 +37,72 @@ namespace Crossplatform
             rectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
             color = playerColor;
             rotation = playerRotation;
+            health = playerHealth;
+            alive = true;
+            attackSpeed = playerAttackSpeed;
+            attackTimer = 0;
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float pixelsToMove = speed * deltaTime;
-            //position -= new Vector2(1, 0);
-            Vector2 moveDir = Vector2.Zero;
-            if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            if(alive)
             {
-                moveDir.X = 1;
+                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float pixelsToMove = speed * deltaTime;
+                //position -= new Vector2(1, 0);
+                Vector2 moveDir = Vector2.Zero;
+                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                {
+                    moveDir.X = 1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+                {
+                    moveDir.X = -1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+                {
+                    moveDir.Y = 1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+                {
+                    moveDir.Y = -1;
+                }
+                if (moveDir != Vector2.Zero)
+                {
+                    moveDir.Normalize();
+                    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
+                    position += moveDir * pixelsToMove;
+                    rectangle.Location += (position - offset).ToPoint();
+                }
             }
-            if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
-            {
-                moveDir.X = -1;
-            }
-            if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
-            {
-                moveDir.Y = 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
-            {
-                moveDir.Y = -1;
-            }
-            if (moveDir != Vector2.Zero)
-            {
-                moveDir.Normalize();
-                //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
-                position += moveDir * pixelsToMove;
-                rectangle.Location += (position - offset).ToPoint();
-            }
+
+            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float pixelsToMove = speed * deltaTime;
+            ////position -= new Vector2(1, 0);
+            //Vector2 moveDir = Vector2.Zero;
+            //if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            //{
+            //    moveDir.X = 1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+            //{
+            //    moveDir.X = -1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+            //{
+            //    moveDir.Y = 1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+            //{
+            //    moveDir.Y = -1;
+            //}
+            //if (moveDir != Vector2.Zero)
+            //{
+            //    moveDir.Normalize();
+            //    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
+            //    position += moveDir * pixelsToMove;
+            //    rectangle.Location += (position - offset).ToPoint();
+            //}
             
             bullets = new List<Bullet>();
         }
