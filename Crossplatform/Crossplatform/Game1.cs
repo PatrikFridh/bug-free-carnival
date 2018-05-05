@@ -67,7 +67,7 @@ namespace Crossplatform
             
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10));
-            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White);
+            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, 100, 1);
             for (int i = 0; i < numHeliCopters; i++)
             {
                 heliStartPosition = new Vector2(800, random.Next(0, 400));
@@ -129,11 +129,12 @@ namespace Crossplatform
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState keyBoardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
             // TODO: Add your update logic here
             float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scoreTimer += deltatime;
-            player.Update(gameTime, keyBoardState);
+            //player.Update(gameTime, keyBoardState, mouseState);
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
 
