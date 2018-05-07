@@ -31,6 +31,7 @@ namespace Crossplatform
             position = bulletStartPos;
             speed = bulletSpeed;
             moveDir = bulletDir;
+            moveDir.Normalize();
             scale = bulletScale;
             offset = bulletTexture.Bounds.Size.ToVector2() * 0.5f;
             rectangle = new Rectangle((bulletStartPos - offset * scale).ToPoint(), (bulletTexture.Bounds.Size.ToVector2() * scale).ToPoint());

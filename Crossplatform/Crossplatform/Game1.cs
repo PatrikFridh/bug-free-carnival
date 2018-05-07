@@ -87,6 +87,7 @@ namespace Crossplatform
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            TextureLibrary.LoadTexture(Content, "ball");
             towerTexture = Content.Load<Texture2D>("Tower");
             heliTexture = Content.Load<Texture2D>("HeliCopter");
             fallingTexture = Content.Load<Texture2D>("FallingObject");
@@ -134,9 +135,10 @@ namespace Crossplatform
             float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scoreTimer += deltatime;
-            //player.Update(gameTime, keyBoardState, mouseState);
+            player.Update(gameTime, keyBoardState, mouseState, Window.ClientBounds.Size);
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
+            BulletManager.Update(deltatime, player);
 
             if (scoreTimer >= 0.5f)
             {
@@ -170,7 +172,7 @@ namespace Crossplatform
             {
                 heliCopters[i].Draw(spriteBatch, scoreFont);
             }
-            
+            BulletManager.Draw(spriteBatch);
             spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), new Vector2(50, 30), Color.Red);
             spriteBatch.DrawString(scoreFont, "Lives: " + heliCopter.Lives.ToString(), new Vector2(600, 30), Color.Blue);
             spriteBatch.End();

@@ -23,7 +23,7 @@ namespace Crossplatform
         bool alive = true;
         float attackSpeed;
         float attackTimer;
-        Players player;
+        
 
         List<Bullet> bullets;
 
@@ -74,6 +74,23 @@ namespace Crossplatform
                     position += moveDir * pixelsToMove;
                     rectangle.Location += (position - offset).ToPoint();
                 }
+
+                attackTimer += deltaTime;
+                if(attackTimer <= attackSpeed)
+                {
+                    attackTimer += deltaTime;
+                }
+
+                if(mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
+                {
+                    Vector2 bulletDir = mouseState.Position.ToVector2() - position;
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("ball"), position, bulletDir, 400, new Vector2(0.2f, 0.2f),Bullet.Owner.Player, color);
+                    attackTimer = 0;
+                }
+            }
+            else
+            {
+                color = Color.Black;
             }
 
             //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -106,14 +123,14 @@ namespace Crossplatform
             
             bullets = new List<Bullet>();
         }
-        public void ChangeHealth(float healthModifier)
-        {
-            health += healthModifier;
-            if (health <= 0)
-            {
-                player = null;
-            }
-        }
+        //public void ChangeHealth(float healthModifier)
+        //{
+        //    health += healthModifier;
+        //    if (health <= 0)
+        //    {
+        //        player = null;
+        //    }
+        //}
 
         public void Draw(SpriteBatch spriteBatch)
         {
