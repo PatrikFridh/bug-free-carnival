@@ -33,9 +33,9 @@ namespace Crossplatform
             texture = towerTexture;
             position = startPos;
             moveDir = new Vector2(-1, 0);
-            scale = towerScale * 0.9f;
+            scale = towerScale;
             offSet = (towerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            rectangle = new Rectangle((position - offSet).ToPoint(), (towerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            rectangle = new Rectangle((position).ToPoint(), (towerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
             
             towerRotation = 0;
             towerSpeed = speed;

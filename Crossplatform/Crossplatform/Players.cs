@@ -22,28 +22,22 @@ namespace Crossplatform
 
         float speed;
         float rotation;
-<<<<<<< HEAD
         public float health;
 
         Players player;
-=======
-        float health;
+
         bool alive = true;
         float attackSpeed;
         float attackTimer;
         
->>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
 
         Rectangle towerRectangele;
         Rectangle heliRectangle;
 
         List<Bullet> bullets;
 
-<<<<<<< HEAD
-        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, Tower tower, HeliCopter heliCopter)
-=======
-        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
->>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
+        //public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, Tower tower, HeliCopter heliCopter)
+        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed, Tower tower, HeliCopter heliCopter)
         {
             health = 10;
             
@@ -55,33 +49,23 @@ namespace Crossplatform
             playerRectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
             color = playerColor;
             rotation = playerRotation;
-<<<<<<< HEAD
             towerRectangele = tower.GetRectangle();
             heliRectangle = heliCopter.GetRectangle();
-=======
             health = playerHealth;
             alive = true;
             attackSpeed = playerAttackSpeed;
             attackTimer = 0;
->>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
         {
-<<<<<<< HEAD
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
-            
             Vector2 moveDir = Vector2.Zero;
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
-=======
             if(alive)
->>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
             {
-                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                float pixelsToMove = speed * deltaTime;
-                //position -= new Vector2(1, 0);
-                Vector2 moveDir = Vector2.Zero;
+                
                 if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
                 {
                     moveDir.X = 1;
@@ -103,7 +87,7 @@ namespace Crossplatform
                     moveDir.Normalize();
                     //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
                     position += moveDir * pixelsToMove;
-                    rectangle.Location += (position - offset).ToPoint();
+                    playerRectangle.Location += (position - offset).ToPoint();
                 }
 
                 attackTimer += deltaTime;
@@ -121,13 +105,10 @@ namespace Crossplatform
             }
             else
             {
-<<<<<<< HEAD
                 moveDir.Normalize();
                 position += moveDir * pixelsToMove;
                 playerRectangle.Location = (position - offset).ToPoint();
-=======
                 color = Color.Black;
->>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
             }
             
             bullets = new List<Bullet>();
