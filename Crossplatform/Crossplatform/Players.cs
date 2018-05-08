@@ -84,7 +84,7 @@ namespace Crossplatform
                 if(mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
                 {
                     Vector2 bulletDir = mouseState.Position.ToVector2() - position;
-                    BulletManager.AddBullet(TextureLibrary.GetTexture("ball"), position, bulletDir, 400, new Vector2(0.2f, 0.2f),Bullet.Owner.Player, color);
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("ball"), position, bulletDir, 800, new Vector2(0.2f, 0.2f),Bullet.Owner.Player, color);
                     attackTimer = 0;
                 }
             }
@@ -92,49 +92,22 @@ namespace Crossplatform
             {
                 color = Color.Black;
             }
-
-            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //float pixelsToMove = speed * deltaTime;
-            ////position -= new Vector2(1, 0);
-            //Vector2 moveDir = Vector2.Zero;
-            //if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
-            //{
-            //    moveDir.X = 1;
-            //}
-            //if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
-            //{
-            //    moveDir.X = -1;
-            //}
-            //if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
-            //{
-            //    moveDir.Y = 1;
-            //}
-            //if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
-            //{
-            //    moveDir.Y = -1;
-            //}
-            //if (moveDir != Vector2.Zero)
-            //{
-            //    moveDir.Normalize();
-            //    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
-            //    position += moveDir * pixelsToMove;
-            //    rectangle.Location += (position - offset).ToPoint();
-            //}
             
             bullets = new List<Bullet>();
         }
-        //public void ChangeHealth(float healthModifier)
-        //{
-        //    health += healthModifier;
-        //    if (health <= 0)
-        //    {
-        //        player = null;
-        //    }
-        //}
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, null, color, rotation, offset, scale, SpriteEffects.None, 0);
+        }
+
+        public void ChangeHealth(float healthModifier)
+        {
+            health += healthModifier;
+            if (health <= 0)
+            {
+                alive = false;
+            }
         }
 
         public Rectangle GetRectangle()

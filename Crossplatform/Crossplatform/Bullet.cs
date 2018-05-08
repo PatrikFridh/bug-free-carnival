@@ -37,7 +37,7 @@ namespace Crossplatform
             rectangle = new Rectangle((bulletStartPos - offset * scale).ToPoint(), (bulletTexture.Bounds.Size.ToVector2() * scale).ToPoint());
             rotation = (float)Math.Atan2(moveDir.Y, moveDir.X);
             color = bulletColor;
-            damage = 100;
+            damage = 500;
             alive = true;
             owner = bulletOwner;
         }

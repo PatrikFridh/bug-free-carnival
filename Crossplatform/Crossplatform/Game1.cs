@@ -64,16 +64,17 @@ namespace Crossplatform
             fallingStartPosition = new Vector2( random.Next(10, 750), 0); 
             
             base.Initialize();
-            
+            IsMouseVisible = true;
+
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
-            heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10));
+            heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10), 100);
             player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, 100, 1);
             for (int i = 0; i < numHeliCopters; i++)
             {
                 heliStartPosition = new Vector2(800, random.Next(0, 400));
                 heliCopter.heliRotation = random.Next(-10, 10);
 
-                heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 300, new Vector2(0.5f,0.5f), Color.White, 1));
+                heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 300, new Vector2(0.5f,0.5f), Color.White, 0, 100));
             }
         }
 
@@ -138,7 +139,7 @@ namespace Crossplatform
             player.Update(gameTime, keyBoardState, mouseState, Window.ClientBounds.Size);
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
-            BulletManager.Update(deltatime, player);
+            BulletManager.Update(deltatime, player, heliCopters);
 
             if (scoreTimer >= 0.5f)
             {
