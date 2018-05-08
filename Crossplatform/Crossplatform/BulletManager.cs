@@ -18,7 +18,7 @@ namespace Crossplatform
             bullets.Add(new Bullet(texture, startPosition, dir, speed, scale, owner, color));
         }
 
-        public static void Update(float deltaTime, Players player/*, List<Enemy> enemies*/)
+        public static void Update(float deltaTime, Players player, List<HeliCopter> heliCopters)
         {
             for (int i = bullets.Count - 1; i >= 0; --i)
             {
@@ -27,16 +27,16 @@ namespace Crossplatform
                     bullets[i].Update(deltaTime);
                     Bullet.Owner owner = bullets[i].GetOwner();
                     float damage = 0;
-                    //switch (owner)
-                    //{
-                    //    case Bullet.Owner.Player:
-                    //        for (int j = 0; j < enemies.Count; ++j)
-                    //        {
-                    //            damage = bullets[i].Damage(enemies[j].GetRecangle());
-                    //            enemies[j].ChangleHealth(-damage);
-                    //        }
-                    //        break;
-                    //}
+                    switch (owner)
+                    {
+                        case Bullet.Owner.Player:
+                            for (int j = 0; j < heliCopters.Count; ++j)
+                            {
+                                damage = bullets[i].Damage(heliCopters[j].GetRectangle());
+                                heliCopters[j].ChangeHealth(-damage);
+                            }
+                            break;
+                    }
                 }
                 else
                 {

@@ -17,6 +17,8 @@ namespace Crossplatform
         Rectangle heliRectangle;
         Tower tower;
         public float Lives;
+        public float heliHealth;
+        bool alive = true;
         Rectangle towerRectangle;
         Game1 game1;
 
@@ -33,10 +35,12 @@ namespace Crossplatform
         public float heliRotation;
         #endregion 
 
-        public HeliCopter(Texture2D texture, Vector2 startPos, float speed, Vector2 scale, Color color, float rotation)// tar imot och ger ut värden
+        public HeliCopter(Texture2D texture, Vector2 startPos, float speed, Vector2 scale, Color color, float rotation, float health)// tar imot och ger ut värden
         {
             heliTexture = texture;
             Lives = 10;
+            heliHealth = health;
+            alive = true;
            // towerRectangle = tower.GetRectangle();
             heliPosition = startPos;
             heliMoveDir = new Vector2(1, 0);
@@ -78,6 +82,16 @@ namespace Crossplatform
 
             spriteBatch.Draw(heliTexture, heliPosition, null, heliColor, 0, heliOffSet, heliScale, SpriteEffects.None, 0);
         }
+
+        public void ChangeHealth(float healthMod)
+        {
+            heliHealth += healthMod;
+            if(heliHealth <= 0)
+            {
+                alive = false;
+            }
+        }
+
         public Rectangle GetRectangle()
         {
             return heliRectangle;
@@ -86,6 +100,7 @@ namespace Crossplatform
         {
             return heliPosition;
         }
+
         void RotationCheck() // kollar om HeliCoptern har gått förbi en viss linje, och om det är sant så bytar den riktning
         {
             if (heliRectangle.Location.X < 600 && rotations == 6)
