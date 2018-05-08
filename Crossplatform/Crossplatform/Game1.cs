@@ -73,13 +73,13 @@ namespace Crossplatform
 
             tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 100);
-            player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, tower, heliCopter);
+            player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, 100, 0.5f, tower, heliCopter);
 
             IsMouseVisible = true;
 
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10), 100);
-            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, tower, heliCopter);
+            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, 100, 0.5f, tower, heliCopter);
 
             for (int i = 0; i < numHeliCopters; i++)
             {
@@ -159,12 +159,7 @@ namespace Crossplatform
                 softCap = 0;
                 //Console.WriteLine("Recharging");
             }
-            
 
-
-
-
-            BulletManager.Update(deltatime, player, heliCopters);
             BulletManager.Update(deltatime, player, heliCopters);
 
             if (scoreTimer >= 0.5f)

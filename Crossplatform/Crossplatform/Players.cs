@@ -62,7 +62,7 @@ namespace Crossplatform
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             Vector2 moveDir = Vector2.Zero;
-            if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+
             if(alive)
             {
                 
