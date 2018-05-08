@@ -69,9 +69,15 @@ namespace Crossplatform
            // playerHealth = player.GetHealth();
             base.Initialize();
             
+
             tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10));
             player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, tower, heliCopter);
+
+            tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
+            heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10));
+            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, 100, 1);
+
             for (int i = 0; i < numHeliCopters; i++)
             {
                 heliStartPosition = new Vector2(800, random.Next(0, 400));
@@ -91,6 +97,7 @@ namespace Crossplatform
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            TextureLibrary.LoadTexture(Content, "ball");
             towerTexture = Content.Load<Texture2D>("Tower");
             heliTexture = Content.Load<Texture2D>("HeliCopter");
             fallingTexture = Content.Load<Texture2D>("FallingObject");
@@ -127,13 +134,15 @@ namespace Crossplatform
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             KeyboardState keyBoardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
             // TODO: Add your update logic here
             float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scoreTimer += deltatime;
-            player.Update(gameTime, keyBoardState);
+            player.Update(gameTime, keyBoardState, mouseState, Window.ClientBounds.Size);
             tower.Update(gameTime, tower, towerStartPosition);
             heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200));
+
             if(softCap < 2)
             {
                 softCap += deltatime;
@@ -150,6 +159,8 @@ namespace Crossplatform
 
 
 
+
+            BulletManager.Update(deltatime, player);
 
             if (scoreTimer >= 0.5f)
             {
@@ -183,7 +194,7 @@ namespace Crossplatform
             {
                 heliCopters[i].Draw(spriteBatch, scoreFont);
             }
-            
+            BulletManager.Draw(spriteBatch);
             spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), new Vector2(50, 30), Color.Red);
             spriteBatch.DrawString(scoreFont, "Lives: " + player.health.ToString(), new Vector2(600, 30), Color.Blue);
             spriteBatch.End();

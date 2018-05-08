@@ -56,7 +56,11 @@
 /processorParam:TextureFormat=Compressed
 /build:File.spritefont
 
+<<<<<<< HEAD
 #begin BigBird.png
+=======
+#begin ball.png
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -66,5 +70,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+<<<<<<< HEAD
 /build:BigBird.png
+=======
+/build:ball.png
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
 

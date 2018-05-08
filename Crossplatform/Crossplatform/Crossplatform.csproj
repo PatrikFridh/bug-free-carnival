@@ -43,11 +43,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
+    <Compile Include="BulletManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="HeliCopter.cs" />
     <Compile Include="Players.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextureLibrary.cs" />
     <Compile Include="Tower.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,16 +22,28 @@ namespace Crossplatform
 
         float speed;
         float rotation;
+<<<<<<< HEAD
         public float health;
 
         Players player;
+=======
+        float health;
+        bool alive = true;
+        float attackSpeed;
+        float attackTimer;
+        
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
 
         Rectangle towerRectangele;
         Rectangle heliRectangle;
 
         List<Bullet> bullets;
 
+<<<<<<< HEAD
         public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, Tower tower, HeliCopter heliCopter)
+=======
+        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed)
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
         {
             health = 10;
             
@@ -43,49 +55,119 @@ namespace Crossplatform
             playerRectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
             color = playerColor;
             rotation = playerRotation;
+<<<<<<< HEAD
             towerRectangele = tower.GetRectangle();
             heliRectangle = heliCopter.GetRectangle();
+=======
+            health = playerHealth;
+            alive = true;
+            attackSpeed = playerAttackSpeed;
+            attackTimer = 0;
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
         {
+<<<<<<< HEAD
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             
             Vector2 moveDir = Vector2.Zero;
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+=======
+            if(alive)
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
             {
-                moveDir.X = 1;
+                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                float pixelsToMove = speed * deltaTime;
+                //position -= new Vector2(1, 0);
+                Vector2 moveDir = Vector2.Zero;
+                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                {
+                    moveDir.X = 1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+                {
+                    moveDir.X = -1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+                {
+                    moveDir.Y = 1;
+                }
+                if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+                {
+                    moveDir.Y = -1;
+                }
+                if (moveDir != Vector2.Zero)
+                {
+                    moveDir.Normalize();
+                    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
+                    position += moveDir * pixelsToMove;
+                    rectangle.Location += (position - offset).ToPoint();
+                }
+
+                attackTimer += deltaTime;
+                if(attackTimer <= attackSpeed)
+                {
+                    attackTimer += deltaTime;
+                }
+
+                if(mouseState.LeftButton == ButtonState.Pressed && attackTimer >= attackSpeed)
+                {
+                    Vector2 bulletDir = mouseState.Position.ToVector2() - position;
+                    BulletManager.AddBullet(TextureLibrary.GetTexture("ball"), position, bulletDir, 400, new Vector2(0.2f, 0.2f),Bullet.Owner.Player, color);
+                    attackTimer = 0;
+                }
             }
-            if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+            else
             {
-                moveDir.X = -1;
-            }
-            if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
-            {
-                moveDir.Y = 1;
-            }
-            if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
-            {
-                moveDir.Y = -1;
-            }
-            if (moveDir != Vector2.Zero)
-            {
+<<<<<<< HEAD
                 moveDir.Normalize();
                 position += moveDir * pixelsToMove;
                 playerRectangle.Location = (position - offset).ToPoint();
+=======
+                color = Color.Black;
+>>>>>>> 4ca9ff370f80833ca166f1586af32a447c59f765
             }
+
+            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float pixelsToMove = speed * deltaTime;
+            ////position -= new Vector2(1, 0);
+            //Vector2 moveDir = Vector2.Zero;
+            //if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            //{
+            //    moveDir.X = 1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+            //{
+            //    moveDir.X = -1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+            //{
+            //    moveDir.Y = 1;
+            //}
+            //if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+            //{
+            //    moveDir.Y = -1;
+            //}
+            //if (moveDir != Vector2.Zero)
+            //{
+            //    moveDir.Normalize();
+            //    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
+            //    position += moveDir * pixelsToMove;
+            //    rectangle.Location += (position - offset).ToPoint();
+            //}
             
             bullets = new List<Bullet>();
         }
-        public void ChangeHealth(float healthModifier)
-        {
-            health += healthModifier;
-            if (health <= 0)
-            {
-                player = null;
-            }
-        }
+        //public void ChangeHealth(float healthModifier)
+        //{
+        //    health += healthModifier;
+        //    if (health <= 0)
+        //    {
+        //        player = null;
+        //    }
+        //}
 
         public bool Collides(Rectangle aCollisionBox)
         {
