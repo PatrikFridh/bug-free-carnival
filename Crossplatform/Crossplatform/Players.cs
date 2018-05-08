@@ -12,35 +12,46 @@ namespace Crossplatform
     class Players
     {
         Texture2D texture;
-        Rectangle rectangle;
+        Rectangle playerRectangle;
+
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
+
         Color color;
+
         float speed;
         float rotation;
-        float health;
+        public float health;
+
         Players player;
+
+        Rectangle towerRectangele;
+        Rectangle heliRectangle;
 
         List<Bullet> bullets;
 
-        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor)
+        public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, Tower tower, HeliCopter heliCopter)
         {
+            health = 10;
+            
             texture = playerTexture;
             position = playerStartPos;
             speed = playerSpeed * 400;
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f * scale);
-            rectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
+            playerRectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
             color = playerColor;
             rotation = playerRotation;
+            towerRectangele = tower.GetRectangle();
+            heliRectangle = heliCopter.GetRectangle();
         }
 
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
-            //position -= new Vector2(1, 0);
+            
             Vector2 moveDir = Vector2.Zero;
             if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
@@ -61,9 +72,8 @@ namespace Crossplatform
             if (moveDir != Vector2.Zero)
             {
                 moveDir.Normalize();
-                //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
                 position += moveDir * pixelsToMove;
-                rectangle.Location += (position - offset).ToPoint();
+                playerRectangle.Location = (position - offset).ToPoint();
             }
             
             bullets = new List<Bullet>();
@@ -77,6 +87,17 @@ namespace Crossplatform
             }
         }
 
+        public bool Collides(Rectangle aCollisionBox)
+        {
+            if (playerRectangle.Intersects(aCollisionBox))
+            {
+                Console.WriteLine("player hit");
+                health--;
+                return true;
+            }
+            return false;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, null, color, rotation, offset, scale, SpriteEffects.None, 0);
@@ -84,12 +105,16 @@ namespace Crossplatform
 
         public Rectangle GetRectangle()
         {
-            return rectangle;
+            return playerRectangle;
         }
 
         public Vector2 GetPositon()
         {
             return position;
+        }
+        public float GetHealth()
+        {
+            return health;
         }
     }
 }

@@ -54,22 +54,24 @@ namespace Crossplatform
             float deltaTime = (float)gameTime.ElapsedGameTime.Seconds;
             rnd = new Random();
 
-            heliPosition -= new Vector2(rnd.Next(5,20), heliRotation);
+            heliPosition -= new Vector2(1, heliRotation);
             heliRectangle.Location = (heliPosition - heliOffSet).ToPoint();
             RotationCheck();
             
 
             if (heliRectangle.Location.X < -200 || heliRectangle.Location.Y < 0 || heliRectangle.Location.Y > 1200)
             {
+
                 heliRotation = 0;
                 heliPosition = startPosition;
                 rotations = 6;
-            }
-            if (heliRectangle.Intersects(towerRectangle))
-            {
-                Console.WriteLine("Hello");
-                Lives--;
-            }
+
+            } 
+            //if (heliRectangle.Intersects(towerRectangle))
+            //{
+            //    Console.WriteLine("Hello");
+            //    Lives--;
+            //}
         }
         public void Draw(SpriteBatch spriteBatch, SpriteFont scoreFent) // ritar ut helicoptern
         {

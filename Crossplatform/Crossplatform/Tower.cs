@@ -35,7 +35,8 @@ namespace Crossplatform
             moveDir = new Vector2(-1, 0);
             scale = towerScale * 0.9f;
             offSet = (towerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            rectangle = new Rectangle((startPos - offSet).ToPoint(), (towerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            rectangle = new Rectangle((position - offSet).ToPoint(), (towerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
+            
             towerRotation = 0;
             towerSpeed = speed;
             towerColor = color;
@@ -44,9 +45,9 @@ namespace Crossplatform
         {
             float deltaTime = (float)gametime.ElapsedGameTime.Seconds;
             rnd = new Random();
-
-            position = position - new Vector2(10,0);
-            rectangle.Location = (position - offSet).ToPoint();
+            
+            position = position - new Vector2(2,0);
+            rectangle.Location = position.ToPoint();
 
             if (rectangle.Location.X < -300)
             {
@@ -56,7 +57,7 @@ namespace Crossplatform
         public void Draw(SpriteBatch spriteBatch)// ritar ut tornet
         {
             spriteBatch.Draw(texture, position, null, towerColor, towerRotation, offSet, scale, SpriteEffects.None, 0);
-
+            spriteBatch.Draw(texture, new Rectangle((position + offSet).ToPoint(), new Point(1, 1)), Color.White);
         }
         public Rectangle GetRectangle()
         {
