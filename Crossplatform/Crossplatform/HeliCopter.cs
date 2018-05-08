@@ -53,12 +53,12 @@ namespace Crossplatform
             rotations = 2;
             
         }
-        public void Update(GameTime gameTime, HeliCopter heliCopter, Vector2 startPosition) // här flyttas helicoptern och ser när den kommit utanför bannan 
+        public void Update(GameTime gameTime, HeliCopter heliCopter, Vector2 startPosition, float score) // här flyttas helicoptern och ser när den kommit utanför bannan 
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.Seconds;
             rnd = new Random();
 
-            heliPosition -= new Vector2(1, heliRotation);
+            heliPosition -= new Vector2(score / 10, heliRotation);
             heliRectangle.Location = (heliPosition - heliOffSet).ToPoint();
             RotationCheck();
             
