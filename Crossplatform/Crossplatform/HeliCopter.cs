@@ -71,6 +71,7 @@ namespace Crossplatform
                 rotations = 6;
 
             } 
+
             //if (heliRectangle.Intersects(towerRectangle))
             //{
             //    Console.WriteLine("Hello");
