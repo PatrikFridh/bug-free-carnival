@@ -62,11 +62,15 @@ namespace Crossplatform
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             Vector2 moveDir = Vector2.Zero;
+<<<<<<< HEAD
             DamageTaken(heliRectangle);
             if (playerRectangle.Intersects(heliCopter.GetRectangle()))
             {
                 Console.WriteLine("heli hit");
             }
+=======
+
+>>>>>>> 12d560986d55b10fcbd7cad18327d11eae484eb1
             if(alive)
             {
                 
