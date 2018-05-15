@@ -33,6 +33,7 @@ namespace Crossplatform
         int rotations;
         public float heliSpeed;
         public float heliRotation;
+        Rectangle playerRectangle;
         #endregion 
 
         public HeliCopter(Texture2D texture, Vector2 startPos, float speed, Vector2 scale, Color color, float rotation, float health)// tar imot och ger ut värden
@@ -40,6 +41,7 @@ namespace Crossplatform
             heliTexture = texture;
             Lives = 10;
             heliHealth = health;
+            
             alive = true;
            // towerRectangle = tower.GetRectangle();
             heliPosition = startPos;
@@ -49,19 +51,28 @@ namespace Crossplatform
             heliRectangle = new Rectangle((startPos - heliOffSet).ToPoint(), (texture.Bounds.Size.ToVector2() * heliScale).ToPoint());
             heliRotation = rotation;
             heliSpeed = speed;
-            heliColor = Color.LightPink;
+            heliColor = Color.White;
             rotations = 2;
             
         }
-        public void Update(GameTime gameTime, HeliCopter heliCopter, Vector2 startPosition, float score) // här flyttas helicoptern och ser när den kommit utanför bannan 
+        public void Update(GameTime gameTime, HeliCopter heliCopter, Vector2 startPosition, float score, Players player) // här flyttas helicoptern och ser när den kommit utanför bannan 
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.Seconds;
             rnd = new Random();
 
-            heliPosition -= new Vector2(score / 10, heliRotation);
-            heliRectangle.Location = (heliPosition - heliOffSet).ToPoint();
+            heliPosition -= new Vector2(score/20 , heliRotation);
+            heliRectangle.Location = heliPosition.ToPoint();
             RotationCheck();
-            
+            playerRectangle = player.GetRectangle();
+            if (!alive)
+            {
+                heliRotation = 0;
+                heliPosition = startPosition;
+                heliRectangle.Location = heliPosition.ToPoint();
+                rotations = 6;
+                heliHealth = 100;
+                alive = true;
+            }
 
             if (heliRectangle.Location.X < -200 || heliRectangle.Location.Y < 0 || heliRectangle.Location.Y > 1200)
             {
@@ -69,14 +80,15 @@ namespace Crossplatform
                 heliRotation = 0;
                 heliPosition = startPosition;
                 rotations = 6;
-
-            } 
-            //if (heliRectangle.Intersects(towerRectangle))
-            //{
-            //    Console.WriteLine("Hello");
-            //    Lives--;
-            //}
+                heliRectangle.Location = heliPosition.ToPoint();
+            }
+            if (heliRectangle.Intersects(playerRectangle))
+            {
+                Console.WriteLine("player hit");
+                Lives--;
+            }
         }
+
         public void Draw(SpriteBatch spriteBatch, SpriteFont scoreFent) // ritar ut helicoptern
         {
 
@@ -89,6 +101,7 @@ namespace Crossplatform
             if(heliHealth <= 0)
             {
                 alive = false;
+                
             }
         }
 

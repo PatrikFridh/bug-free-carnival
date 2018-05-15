@@ -23,7 +23,7 @@ namespace Crossplatform
         float speed;
         float rotation;
         public float health;
-
+        Random rnd;
         Players player;
 
         bool alive = true;
@@ -40,16 +40,16 @@ namespace Crossplatform
         public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed, Tower tower, HeliCopter heliCopter)
         {
             health = 10;
-            
+            rnd = new Random();
             texture = playerTexture;
             position = playerStartPos;
-            speed = playerSpeed * 400;
+            speed = playerSpeed;
             scale = playerScale;
             offset = (playerTexture.Bounds.Size.ToVector2() / 2.0f * scale);
             playerRectangle = new Rectangle((playerStartPos - offset).ToPoint(), (playerTexture.Bounds.Size.ToVector2() * playerScale).ToPoint());
             color = playerColor;
             rotation = playerRotation;
-            towerRectangele = tower.GetRectangle();
+           // towerRectangele = tower.GetRectangle();
             heliRectangle = heliCopter.GetRectangle();
             health = playerHealth;
             alive = true;
@@ -57,35 +57,65 @@ namespace Crossplatform
             attackTimer = 0;
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize)
+        public void Update(GameTime gameTime, KeyboardState keyboardState, MouseState mouseState, Point windowSize, HeliCopter heliCopter)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             Vector2 moveDir = Vector2.Zero;
-            if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+            DamageTaken(heliRectangle);
+            if (playerRectangle.Intersects(heliCopter.GetRectangle()))
+            {
+                Console.WriteLine("heli hit");
+            }
             if(alive)
             {
                 
-                if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                if(position.X >= 0)
                 {
-                    moveDir.X = 1;
+                    
+                    if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+                    {
+                        moveDir.X = -1;
+                    }
                 }
-                if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+                if (position.Y >= 0)
                 {
-                    moveDir.X = -1;
+                    
+                    if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+                    {
+                        moveDir.Y = -1;
+                    }
                 }
-                if (keyboardState.IsKeyDown(Keys.Down) || keyboardState.IsKeyDown(Keys.S))
+                if (position.X <= 800)
                 {
-                    moveDir.Y = 1;
+                    if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+                    {
+                        moveDir.X = 1;
+                    }
+                    
                 }
-                if (keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.W))
+                if(position.Y <= 470)
                 {
-                    moveDir.Y = -1;
+                    if(keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down))
+                    {
+                        moveDir.Y = 1;
+                    }
                 }
+
+
+
+
+
+
+                
+                
+                
+                
+                
                 if (moveDir != Vector2.Zero)
                 {
                     moveDir.Normalize();
-                    //rectangle.Location += (moveDir * speed * deltaTime).ToPoint();
+                    //playerRectangle.Location += (moveDir * speed * deltaTime).ToPoint();
                     position += moveDir * pixelsToMove;
                     playerRectangle.Location += (position - offset).ToPoint();
                 }
@@ -151,6 +181,13 @@ namespace Crossplatform
         public float GetHealth()
         {
             return health;
+        }
+        public void DamageTaken(Rectangle damagingRectangle)
+        {
+            if (playerRectangle.Intersects(damagingRectangle))
+            {
+                Console.WriteLine("h<selij zdrv");
+            }
         }
     }
 }

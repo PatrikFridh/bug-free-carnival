@@ -57,23 +57,23 @@ namespace Crossplatform
         {
             // TODO: Add your initialization logic here
             random = new Random();
-            numHeliCopters = 2;
+            numHeliCopters = 10;
             softCap = 1;
             HP = 10;
             score = 2;
             heliCopters = new List<HeliCopter>();
             scoreTimer = 0;
             towerStartPosition = new Vector2(Window.ClientBounds.Right, 450);
-            heliStartPosition = new Vector2(800,600);
+            heliStartPosition = new Vector2(1000,200);
             fallingStartPosition = new Vector2( random.Next(10, 750), 0);
            // playerHealth = player.GetHealth();
             base.Initialize();
  
             
 
-            tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
-            heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 100);
-            player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, 100, 1, tower, heliCopter);
+            //tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
+            heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 3);
+            player = new Players(playerTexture, new Vector2(200, 100), 300, new Vector2(1, 1), 0, Color.White, 10, 1, tower, heliCopter);
 
             IsMouseVisible = true;
 
@@ -141,39 +141,34 @@ namespace Crossplatform
             float deltatime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             scoreTimer += deltatime;
-            player.Update(gameTime, keyBoardState, mouseState, Window.ClientBounds.Size);
-            tower.Update(gameTime, tower, towerStartPosition);
-            heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200), score);
-
-            if(softCap < 2)
+            player.Update(gameTime, keyBoardState, mouseState, Window.ClientBounds.Size, heliCopter);
+            tower.Update(gameTime, tower, towerStartPosition, score);
+            heliCopter.Update(gameTime, heliCopter, new Vector2(800, 200), score, player);
+            player.Collides(heliCopter.GetRectangle());
+            if (softCap < 2)
             {
                 softCap += deltatime;
                 //Console.WriteLine("Full");
             }
             if (softCap >= 2)
             {
-                player.Collides(tower.GetRectangle());
-                //player.Collides(heliCopter.GetRectangle());
+                //player.Collides(tower.GetRectangle());
+                player.Collides(heliCopter.GetRectangle());
                 softCap = 0;
                 //Console.WriteLine("Recharging");
             }
             
-
-
-
-
-            BulletManager.Update(deltatime, player, heliCopters);
             BulletManager.Update(deltatime, player, heliCopters);
 
-            if (scoreTimer >= 0.1f)
+            if (scoreTimer >= 0.3f)
             {
-                score += 5;
+                score += 1;
                 scoreTimer = 0f;
             }
 
             for (int i = 0; i < heliCopters.Count;i++)
             {
-                heliCopters[i].Update(gameTime, heliCopter, new Vector2(800, random.Next(100,300)), score);
+                heliCopters[i].Update(gameTime, heliCopter, new Vector2(800, random.Next(100,300)), score, player);
             }
 
             base.Update(gameTime);
@@ -188,10 +183,10 @@ namespace Crossplatform
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
-            GraphicsDevice.Clear(Color.Black);
+            
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
-            tower.Draw(spriteBatch);
+           // tower.Draw(spriteBatch);
             player.Draw(spriteBatch);
             for (int i = 0; i < heliCopters.Count; i++)
             {

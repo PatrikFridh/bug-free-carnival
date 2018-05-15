@@ -34,19 +34,18 @@ namespace Crossplatform
             position = startPos;
             moveDir = new Vector2(-1, 0);
             scale = towerScale;
-            offSet = (towerTexture.Bounds.Size.ToVector2() / 2.0f) * scale;
-            rectangle = new Rectangle((position).ToPoint(), (towerTexture.Bounds.Size.ToVector2() * scale).ToPoint());
-            
+            offSet = (texture.Bounds.Size.ToVector2() / 2.0f) * scale;
+            rectangle = new Rectangle((startPos - offSet).ToPoint(), (texture.Bounds.Size.ToVector2() * scale).ToPoint());
             towerRotation = 0;
             towerSpeed = speed;
             towerColor = color;
         }
-        public void Update(GameTime gametime, Tower tower, Vector2 startPosition) // flyttar och ser om tornet är utanför mappen
+        public void Update(GameTime gametime, Tower tower, Vector2 startPosition, float score) // flyttar och ser om tornet är utanför mappen
         {
             float deltaTime = (float)gametime.ElapsedGameTime.Seconds;
             rnd = new Random();
             
-            position = position - new Vector2(2,0);
+            position = position - new Vector2(score/23,0);
             rectangle.Location = position.ToPoint();
 
             if (rectangle.Location.X < -300)
