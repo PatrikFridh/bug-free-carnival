@@ -17,7 +17,7 @@ namespace Crossplatform
         Vector2 position;
         Vector2 scale;
         Vector2 offset;
-
+        float damageCoolDown;
         Color color;
 
         float speed;
@@ -39,7 +39,8 @@ namespace Crossplatform
         //public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, Tower tower, HeliCopter heliCopter)
         public Players(Texture2D playerTexture, Vector2 playerStartPos, float playerSpeed, Vector2 playerScale, float playerRotation, Color playerColor, float playerHealth, float playerAttackSpeed, Tower tower, HeliCopter heliCopter)
         {
-            health = 10;
+            damageCoolDown = 2;
+            health = playerHealth;
             rnd = new Random();
             texture = playerTexture;
             position = playerStartPos;
@@ -62,15 +63,17 @@ namespace Crossplatform
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float pixelsToMove = speed * deltaTime;
             Vector2 moveDir = Vector2.Zero;
-<<<<<<< HEAD
             DamageTaken(heliRectangle);
             if (playerRectangle.Intersects(heliCopter.GetRectangle()))
             {
                 Console.WriteLine("heli hit");
             }
-=======
+            if (damageCoolDown <= 2)
+            {
+                damageCoolDown += deltaTime;
+                Console.WriteLine(damageCoolDown);
+            }
 
->>>>>>> 12d560986d55b10fcbd7cad18327d11eae484eb1
             if(alive)
             {
                 
@@ -106,22 +109,13 @@ namespace Crossplatform
                     }
                 }
 
-
-
-
-
-
-                
-                
-                
-                
-                
                 if (moveDir != Vector2.Zero)
                 {
                     moveDir.Normalize();
                     //playerRectangle.Location += (moveDir * speed * deltaTime).ToPoint();
                     position += moveDir * pixelsToMove;
-                    playerRectangle.Location += (position - offset).ToPoint();
+                    playerRectangle.Location = position.ToPoint();
+                    playerRectangle.Offset(-offset);
                 }
 
                 attackTimer += deltaTime;
@@ -141,7 +135,8 @@ namespace Crossplatform
             {
                 moveDir.Normalize();
                 position += moveDir * pixelsToMove;
-                playerRectangle.Location = (position - offset).ToPoint();
+                playerRectangle.Location = position.ToPoint();
+                playerRectangle.Offset(-offset);
                 color = Color.Black;
             }
             
@@ -150,10 +145,11 @@ namespace Crossplatform
 
         public bool Collides(Rectangle aCollisionBox)
         {
-            if (playerRectangle.Intersects(aCollisionBox))
+            if (playerRectangle.Intersects(aCollisionBox) && damageCoolDown >= 2)
             {
                 Console.WriteLine("player hit");
                 health--;
+                damageCoolDown = 0;
                 return true;
             }
             return false;

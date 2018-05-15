@@ -57,7 +57,7 @@ namespace Crossplatform
         }
         public void Update(GameTime gameTime, HeliCopter heliCopter, Vector2 startPosition, float score, Players player) // här flyttas helicoptern och ser när den kommit utanför bannan 
         {
-            float deltaTime = (float)gameTime.ElapsedGameTime.Seconds;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             rnd = new Random();
 
             heliPosition -= new Vector2(score/20 , heliRotation);
@@ -80,7 +80,6 @@ namespace Crossplatform
                 heliRotation = 0;
                 heliPosition = startPosition;
                 rotations = 6;
-<<<<<<< HEAD
                 heliRectangle.Location = heliPosition.ToPoint();
             }
             if (heliRectangle.Intersects(playerRectangle))
@@ -88,16 +87,7 @@ namespace Crossplatform
                 Console.WriteLine("player hit");
                 Lives--;
             }
-=======
 
-            } 
-
-            //if (heliRectangle.Intersects(towerRectangle))
-            //{
-            //    Console.WriteLine("Hello");
-            //    Lives--;
-            //}
->>>>>>> 12d560986d55b10fcbd7cad18327d11eae484eb1
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont scoreFent) // ritar ut helicoptern

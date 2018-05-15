@@ -19,7 +19,7 @@ namespace Crossplatform
         Random random;
         static float score;
         float scoreTimer;
-        static float HP;
+        float HP;
         Players player;
         Texture2D towerTexture;
         Texture2D heliTexture;
@@ -72,13 +72,13 @@ namespace Crossplatform
             
 
 
-            //tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
-            heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 3);
-            player = new Players(playerTexture, new Vector2(200, 100), 300, new Vector2(1, 1), 0, Color.White, 10, 1, tower, heliCopter);
+            ////tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
+            //heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 3);
+            //player = new Players(playerTexture, new Vector2(200, 100), 300, new Vector2(1, 1), 0, Color.White, 10, 1, tower, heliCopter);
 
-            tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
-            heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 100);
-            player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, 100, 0.5f, tower, heliCopter);
+            //tower = new Tower(towerTexture, new Vector2(800, 200), 1, new Vector2(0.3f,0.3f), Color.White, 1);
+            //heliCopter = new HeliCopter(heliTexture, heliStartPosition,1,new Vector2(1,1), Color.White, random.Next(-10,10), 100);
+            //player = new Players(playerTexture, new Vector2(200, -100), 1, new Vector2(1, 1), 0, Color.White, 100, 0.5f, tower, heliCopter);
 
 
             IsMouseVisible = true;
@@ -86,7 +86,7 @@ namespace Crossplatform
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10), 100);
 
-            player = new Players(playerTexture, new Vector2(500, -50), 1, new Vector2(0.5f, 0.5f), 0, Color.White, 100, 0.5f, tower, heliCopter);
+            player = new Players(playerTexture, new Vector2(500, -50), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 10, 0.2f, tower, heliCopter);
 
 
             for (int i = 0; i < numHeliCopters; i++)
@@ -166,6 +166,10 @@ namespace Crossplatform
                 softCap = 0;
                 //Console.WriteLine("Recharging");
             }
+            if (player.health == 0)
+            {
+                Exit();
+            }
 
             BulletManager.Update(deltatime, player, heliCopters);
 
@@ -178,6 +182,11 @@ namespace Crossplatform
             for (int i = 0; i < heliCopters.Count;i++)
             {
                 heliCopters[i].Update(gameTime, heliCopter, new Vector2(800, random.Next(100,300)), score, player);
+
+                if(player.Collides(heliCopters[i].GetRectangle()) == true)
+                {
+
+                }
             }
 
             base.Update(gameTime);
@@ -203,7 +212,7 @@ namespace Crossplatform
             }
             BulletManager.Draw(spriteBatch);
             spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), new Vector2(50, 30), Color.Red);
-            spriteBatch.DrawString(scoreFont, "Lives: 11 " + player.health.ToString(), new Vector2(600, 30), Color.Blue);
+            spriteBatch.DrawString(scoreFont, "Lives: " + player.health.ToString(), new Vector2(600, 30), Color.Blue);
             spriteBatch.End();
             base.Draw(gameTime);
         }
