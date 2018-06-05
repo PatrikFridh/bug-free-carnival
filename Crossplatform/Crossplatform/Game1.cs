@@ -86,12 +86,12 @@ namespace Crossplatform
             tower = new Tower(towerTexture, towerStartPosition, 1, new Vector2(1,1), Color.White, 1);
             heliCopter = new HeliCopter(heliTexture, heliStartPosition,random.Next(5,20),new Vector2(0.5f,0.5f), Color.White, random.Next(-10,10), 100);
 
-            player = new Players(playerTexture, new Vector2(500, -50), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 10, 0.2f, tower, heliCopter);
+            player = new Players(playerTexture, new Vector2(200, 50), 300, new Vector2(0.5f, 0.5f), 0, Color.White, 10, 0.2f, tower, heliCopter);
 
 
             for (int i = 0; i < numHeliCopters; i++)
             {
-                heliStartPosition = new Vector2(800, random.Next(0, 400));
+                heliStartPosition = new Vector2(800, random.Next(100, 600));
                 heliCopter.heliRotation = random.Next(-10, 10);
 
                 heliCopters.Add(new HeliCopter(heliTexture, heliStartPosition, 1, new Vector2(0.5f,0.5f), Color.White, 1, 100));
